@@ -1,17 +1,33 @@
+"""
+Collection of functions responsible for modifying the color 
+channels of this assignment. The command_interpreter can be
+considered as a public function. It interpretes what has to
+be done and performs the correct operation, then returns the
+modified image.  
+"""
 import numpy as np
 
 def command_interpreter(matrix, command, shift_amount = 0):
+    """
+    "Public" function that gets called from the notebook, or
+    wherever you want to implement this code. Then it reroutes
+    the given image matrix and command to the correct function.
+    If you add new functions, make sure to add it to the interpreter
+    so it knows what to do.
+    """
+    if command is False:
+        return matrix
     if command in ('R', 'G', 'B'):
         return boost_colorchannel(matrix, command)
-    elif command == 'N':
+    if command == 'N':
         return negative(matrix)
-    elif command == 'S':
+    if command == 'S':
         return shift(matrix, shift_amount)
-    return matrix
+    #throw an error if the command is not recognized:
+    raise RuntimeError(f"The command {command} could not be interpreted.")
 
-"""
-    Every manipulation to the color channels of images are in this file
-"""
+#normally you'd declare this as a private method with dunder,
+# for the sake of the exercise I only use functions.
 ############# COLOR MANIPULATION FUNCTIONS:
 def boost_colorchannel(matrix, channel:str):
     """
@@ -24,9 +40,8 @@ def boost_colorchannel(matrix, channel:str):
     """
     color_channels = 'RGB'
     if channel.upper() not in color_channels:
-        raise Exception("Invalid color channel given")
-    #normally you'd declare this as a private method with dunder,
-    # for the sake of the exercise I only use functions.
+        raise RuntimeError("Invalid color channel given")
+
     matrix_clone = matrix.copy()
     matrix_clone[:, :, color_channels.index(channel)] = 255
     return matrix_clone
@@ -46,5 +61,5 @@ def negative(matrix):
     This function will return the negative of an image (think of old 
     rolls of film). 0 becomes 255, 1 becomes 254 etc...
     """
-    new_matrix =np.absolute(matrix-[255, 255, 255])
+    new_matrix = np.absolute(matrix-[255, 255, 255])
     return new_matrix
