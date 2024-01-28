@@ -7,7 +7,7 @@ modified image.
 """
 import numpy as np
 
-def command_interpreter(matrix, command, shift_amount = 0):
+def command_interpreter(matrix, command):
     """
     "Public" function that gets called from the notebook, or
     wherever you want to implement this code. Then it reroutes
@@ -21,7 +21,8 @@ def command_interpreter(matrix, command, shift_amount = 0):
         return boost_colorchannel(matrix, command)
     if command == 'N':
         return negative(matrix)
-    if command == 'S':
+    if command in ('S_1', 'S_2'):
+        shift_amount = int(command.split('_')[1])
         return shift(matrix, shift_amount)
     #throw an error if the command is not recognized:
     raise RuntimeError(f"The command {command} could not be interpreted.")
