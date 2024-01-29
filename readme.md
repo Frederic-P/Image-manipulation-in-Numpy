@@ -23,11 +23,50 @@ The core of the notebook is a function called `convert_recipe_to_image_matrix` i
      - **type**: LIST
      - **description**: This is a list with rows*cols elements in it. Each element describes a cell with three different parameters. The first element in the cell-list is a grow factor. The second element in the cell-list are all modifications done on the color channel. The final element in the cell-list are all modifications done which have to do with warping/rotating the image. 
 
+
 ### available cell-commands: 
 
+#### Grow factor: 
+The grow factor is a positive integer. If you want to keep you cell to the same size the original image was, you use a grow factor of 1 in your recipe. If you provide a grow factor of 2 your image will grow 2² times. 2 times horizontally and two times vertically. A grow factor 2 will thus result in 4 cells being used. 
+
+To accomodate for this size increase you need to define x amount of cells in your recipe with grow factor 0. These cells with grow factor 0 should be the cells that are 'taken over' by growing one other cell and position the topleft corner of the grown cell in your grid. See example 3 in the notebook for a concrete implementation. The formula to calculate the x-required amount of cells with grow factor 0 is: (grow_factor*grow_factor)-1
+
 #### Color commands: 
+Color commands are case-sensitive and are part of the cell recipe. The position of color commands is on index 1 of your recipe. Should you not wish to modify the color channels. Provide ```False``` in your recipe at index 1.
+
+All color commands are available through the convenience function **command_interpreter()**, which means you can simply rely on adding them to the cell-recipe without worrying about code. There's no need for you to directly call any of the functions in color_functions.py module.
+
+- '**R**': Returns an image where the red channel of the image is set to 255 for every pixel in the image.
+- '**G**': Returns an image where the green channel of the image is set to 255 for every pixel in the image.
+- '**B**': Returns an image where the blue channel of the image is set to 255 for every pixel in the image.
+- '**N**': Returns a negative of the image (think of old filmstock photography).
+- '**S_1**: Returns an image where the channels are shifted by one position. (R becomes G, G becomes B, B becomes R)
+- '**S_2**: Returns an image where the channels are shifted by two positions. (R becomes B, G becomes R, B becomes G)
+
+##### Extending Color commands: 
+You can extend the color commands module with the following procedure: 
+1) Write a new function in the color_functions.py file, give it a unique name. At a bare minimum it should accept the numpy 3D array as a parameter. The return value should be the modified matrix you'd want to use elsewhere.
+2) Append an if-statment to the command_interpreter() function which looks for the given command and reroutes the given image matrix to your custom function. 
+    - Caveat: The command to look for, cannot be used by other commands already present in the code.
+
+
 
 #### Warp/rotation commands: 
+Warp commands are case-sensitive and are part of the cell recipe. The position of warp commands is on index 2 of your recipe. Should you not wish to warp your image. Provide ```False``` in your recipe at index 2.
+
+Most warp-commands are directly available through the convenience function ***command_interpreter()**, which means you can simply rely on adding them to the cell-recipe without worrying about code. There's no need for you to directly call these functions directly in warp_functions.py. 
+- '**mirror_y**': Returns an image mirrored over the y axis.
+- '**mirror_x**': Returns an image mirrored over the x axis.
+- '**rot_180**': Returns an image which has turned 180°.
+- '**rot_90**': Returns an image which has turned 90° clockwise.
+- '**rot_270**': Retuns an image which has turned 270° clockwise.
+
+The warp_functions.py module has one function which has to be called directly. This is the **sliding_puzzle_image_generator(matrix, rows, cols)** function. It generates the start of an old puzzle with n*m-1 tiles and one blacked out tile (https://en.wikipedia.org/wiki/Sliding_puzzle). This function takes three arguments:
+1) a 3D numpy-array of the image you want to shuffle
+2) rows (int): the amount of rows you want to see in your shuffled image
+3) cols (int): the amount of columns you want to see in your shuffled image
+
+This function will return a 3D array with a shape that is at least equal to the given shape, or slightly bigger to ensure every sliding puzzleblock is of the exact same size.
 
 #### example of a 2*2 matrix: 
 ````
