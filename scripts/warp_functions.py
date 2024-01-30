@@ -30,10 +30,20 @@ def command_interpreter(matrix, command):
     if command == 'rot_180':
         return rotate(matrix,2)
     if command == 'rot_90':
+        check_square(matrix)
         return rotate(matrix, 3)
     if command == 'rot_270':
+        check_square(matrix)
         return rotate(matrix, 1)
     raise RuntimeError(f"The command {command} could not be interpreted.")
+
+def check_square(matrix):
+    """
+    Raise an error if a non-square image is passed to a function which alters
+    the shape of a given matrix.
+    """
+    if matrix.shape[0] != matrix.shape[1]:
+        raise NotImplementedError("Non-square images are not supported at the moment.")
 
 def resize(matrix, factor:int):
     """
