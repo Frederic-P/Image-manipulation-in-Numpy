@@ -7,7 +7,7 @@ you can do with Numpy
 
 ## Installation: 
 1) Download the GitHub repository, or clone it as you would with every other GitHub project.
-2) Install and active the virtual environment (environment.yaml)
+2) Install and activate the virtual environment (environment.yaml)
 3) Run the notebook
 4) Play with all the cells. 
 
@@ -21,7 +21,7 @@ The core of the notebook is a function called `convert_recipe_to_image_matrix` i
     - **description**: The amount of columns the output grid should have. 
 3) cells:
      - **type**: LIST
-     - **description**: This is a list with rows*cols elements in it. Each element describes a cell with three different parameters. The first element in the cell-list is a grow factor. The second element in the cell-list are all modifications done on the color channel. The final element in the cell-list are all modifications done which have to do with warping/rotating the image. 
+     - **description**: This is a list with rows*cols elements in it. Each element describes a cell with three different parameters. The first element in the cell-list is a grow factor. The second element in the cell-list are all modifications done on the color channel. The final element in the cell-list are all modifications done which have to do with warping/rotating the image. For a detailled explanation about these three elements see the following section *available cell-commands*.
 
 
 ### available cell-commands: 
@@ -67,6 +67,9 @@ The warp_functions.py module has one function which has to be called directly. T
 3) cols (int): the amount of columns you want to see in your shuffled image
 
 This function will return a 3D array with a shape that is at least equal to the given shape, or slightly bigger to ensure every sliding puzzleblock is of the exact same size.
+
+##### Extending warp functionalities: 
+Extending warp functionalities is exactly the same as extending the color functionalities with the exception of warp functions which potentially return a larger grid. 
 
 #### example of a 2*2 matrix: 
 ````
