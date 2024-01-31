@@ -62,5 +62,5 @@ def negative(matrix):
     This function will return the negative of an image (think of old 
     rolls of film). 0 becomes 255, 1 becomes 254 etc...
     """
-    new_matrix = np.absolute(matrix-[255, 255, 255])
+    new_matrix = np.absolute(matrix - [255, 255, 255])
     return new_matrix

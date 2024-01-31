@@ -100,10 +100,10 @@ def sliding_puzzle_image_generator(matrix, rows, cols):
     # fill the new grid using full with topleft pixel values of img
     # np.full: https://numpy.org/doc/stable/reference/generated/numpy.full.html
     new_shape = np.full((int(new_hor), int(new_vert),3), img[0][0], dtype=int)
-    # calculate offset from the left and the top: 
+    # calculate offset from the left and the top:
     left_offset = int((new_hor - base_hor)//2)
     top_offset = int((new_vert - base_vert)//2)
-    # use the two offset values to put img in new_shape with topleft pixel at both offset values: 
+    # use the two offset values to put img in new_shape with topleft pixel at both offset values:
     new_shape[left_offset:left_offset + img.shape[0], top_offset:top_offset + img.shape[1], :] = img
     # np.array_split: https://numpy.org/doc/stable/reference/generated/numpy.array_split.html 
     new_shape = np.array_split(new_shape, rows, axis=0)

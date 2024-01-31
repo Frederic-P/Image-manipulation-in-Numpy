@@ -2,7 +2,7 @@
 Downloadable from: [GitHub](https://github.com/Frederic-P/Image-manipulation-in-Numpy)
 
 ## About
-Collection of numpy functions used in a notebook to show some of the basic image manipulations
+Collection of Numpy functions used in a notebook to show some of the basic image manipulations
 you can do with Numpy
 
 ## Overview of key files/folders:
@@ -23,7 +23,7 @@ root
 -.settings.json
 ```
 
-- **scripts** holds two python function where all the actual functionality is implemented. Code is organized into two files, each centered on a single aspect of image manipulation (color channels & warping/rotating).
+- **scripts** holds two python function where all the actual functionality is implemented. Code is organized into two files, each centred on a single aspect of image manipulation (color channels & warping/rotating).
 - **data/raw_data** The notebook will look in this folder for a given image.
 - **documentation** what were the deliverables?
 - **environment.yaml** Yaml file required to recreate the python virtual environment locally
@@ -32,9 +32,9 @@ root
 
 ## Installation: 
 1) Download the GitHub repository, or clone it as you would with every other GitHub project.
-2) Install and activate the virtual environment (environment.yaml)
-- Open an Anaconda Powershell prompt and use `cd` to navigate to the directory where you cloned this repository to. The commands below assume you are in the root-directory of the codebase. To install the environment use: `conda env create -f environment.yaml`
-- once installed type: `conda activate env_project_numpy` to activate this environment
+2) Install and activate the virtual environment (environment.yaml). For this you'll need to have [Anaconda](https://docs.anaconda.com/free/navigator/index.html) installed.
+- Open an Anaconda PowerShell prompt and use `cd` to navigate to the directory where you cloned this repository to. The commands below assume you are in the root-directory of the codebase. To install the environment use: `conda env create -f environment.yaml` Wait for the installation process to complete. You'll know if the process is complete when the Anaconda PowerShell shows you the commands to activate and deactivate the newly installed environemnt.
+- once installed type: `conda activate env_project_numpy` to activate this environment; you need to use this Kernel for all modules to work. 
 - once activated open the notebook using the `jupyter notebook` command and open the notebook named **notebook_demo.ipynb** in the browserwindow that pops up. 
 3) Run the notebook
 4) Play with all the cells
@@ -49,7 +49,7 @@ The core of the notebook is a function called `convert_recipe_to_image_matrix` i
     - **description**: The amount of columns the output grid should have. 
 3) cells:
      - **type**: LIST
-     - **description**: This is a list with rows*cols elements in it. Each element describes a cell with three different parameters and should be of the type list. The first element in the cell-list is a grow factor. The second element in the cell-list are all modifications done on the color channel. The final element in the cell-list are all modifications done which have to do with warping/rotating the image. For a detailled explanation about these three elements see the following section *available cell-commands*.
+     - **description**: This is a list with rows*cols elements in it. Each element describes a cell with three different parameters and should be of the type list. The first element in the cell-list is a grow factor. The second element in the cell-list are all modifications done on the color channel. The final element in the cell-list are all modifications done which have to do with warping/rotating the image. For a detailed explanation about these three elements see the following section *available cell-commands*.
 
 
 ### available cell-commands: 
@@ -57,7 +57,7 @@ The core of the notebook is a function called `convert_recipe_to_image_matrix` i
 #### Grow factor: 
 The grow factor is a positive integer. If you want to keep your cell to the same size the original image was, you use a grow factor of 1 in your recipe. If you provide a grow factor of 2 your image will grow 2² times. 2 times horizontally and two times vertically. A grow factor 2 will thus result in 4 cells being used. 
 
-To accomodate for this size increase you need to define x amount of cells in your recipe with grow factor 0. These cells with grow factor 0 should be the cells that are 'taken over' by growing one other cell and position the topleft corner of the grown cell in your grid. See example 3 in the notebook for a concrete implementation. The formula to calculate the x-required amount of cells with grow factor 0 is: (grow_factor*grow_factor)-1
+To accommodate for this size increase you need to define x amount of cells in your recipe with grow factor 0. These cells with grow factor 0 should be the cells that are 'taken over' by growing one other cell and position the topleft corner of the grown cell in your grid. See example 3 in the notebook for a concrete implementation. The formula to calculate the x-required amount of cells with grow factor 0 is: (grow_factor*grow_factor)-1
 
 #### Color commands: 
 Color commands are case-sensitive and are part of the cell recipe. The position of color commands is on index 1 of your recipe. Should you not wish to modify the color channels. Provide ```False``` in your recipe at index 1.
@@ -82,7 +82,7 @@ example_S_2 = {
 
 ##### Extending Color commands: 
 You can extend the color commands module with the following procedure: 
-1) Write a new function in the color_functions.py file, give it a unique name. At a bare minimum it should accept the numpy 3D array as a parameter. The return value should be the modified matrix you'd want to use elsewhere.
+1) Write a new function in the color_functions.py file, give it a unique name. At a bare minimum it should accept the Numpy 3D array as a parameter. The return value should be the modified matrix you'd want to use elsewhere.
 2) Append an if-statment to the `command_interpreter()` function which looks for the given command and reroutes the given image matrix to your custom function. 
     - Caveat: The command to look for, cannot be used by other commands already present in the code.
 
@@ -96,10 +96,10 @@ Most warp-commands are directly available through the convenience function ***co
 - '**mirror_x**': Returns an image mirrored over the x axis.
 - '**rot_180**': Returns an image which has turned 180°.
 - '**rot_90**': Returns an image which has turned 90° clockwise.
-- '**rot_270**': Retuns an image which has turned 270° clockwise.
+- '**rot_270**': Returns an image which has turned 270° clockwise.
 
 The warp_functions.py module has one function which has to be called directly. This is the **sliding_puzzle_image_generator(matrix, rows, cols)** function. It generates the start of an old puzzle with n*m-1 tiles and one blacked out tile (https://en.wikipedia.org/wiki/Sliding_puzzle). This function takes three arguments:
-1) a 3D numpy-array of the image you want to shuffle
+1) a 3D Numpy-array of the image you want to shuffle
 2) rows (int): the amount of rows you want to see in your shuffled image
 3) cols (int): the amount of columns you want to see in your shuffled image
 
